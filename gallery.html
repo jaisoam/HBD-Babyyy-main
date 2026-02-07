@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My babyyy 💕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:'Comic Sans MS', cursive;
+    background:linear-gradient(135deg,#ff9ecf,#ffb6e6,#ffc6f0);
+    text-align:center;
+}
+
+h1{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:white;
+    margin:30px 0;
+    font-size:28px;
+    text-shadow:0 0 15px #ff3399;
+}
+
+.slider{
+    position:relative;
+    width:80%;
+    max-width:400px;
+    margin:30px auto;
+}
+.slider img, .slider video {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(255, 0, 150, 0.6);
+    display: none; /* This hides both photos AND video by default */
+}
+
+/* This class shows the current item (photo or video) */
+.slider img.active, .slider video.active {
+    display: block;
+}
+
+
+.controls{
+    margin-top:20px;
+}
+
+button{
+    padding:10px 25px;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
+    cursor:pointer;
+    background:#ff3399;
+    color:white;
+    box-shadow:0 0 15px #ff66cc;
+    transition:0.3s;
+    margin:5px;
+}
+
+button:hover{
+    transform:scale(1.1);
+    background:#ffffff;
+}
+</style>
+</head>
+
+<body>
+
+<h1>you are cutee😂💖</h1>
+
+<!-- 🎵 Music (auto plays after first interaction) -->
+<audio id="bgMusic" loop>
+    <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<div class="slider">
+    <img src="Cute1.jpeg" class="active">
+    <img src="cute 2.jpeg">
+    <img src="cute3.png">
+    <img src="photo5.jpg">
+    <img src="photo6.jpg">
+    <img src="photo7.jpg">
+    <img src="photo8.jpg">
+    <img src="photo9.jpg">
+    <img src="photo10.jpg">  
+    
+    <video src="video1.mp4" id="sliderVideo" loop></video>
+</div>
+<div class="controls">
+    <button onclick="prevImage()">⬅ Previous</button>
+    <button onclick="nextImage()">Next ➡</button>
+</div>
+
+<script>
+    // 1. Select all slides (images + video)
+    let slides = document.querySelectorAll(".slider img, .slider video");
+    let index = 0;
+    let music = document.getElementById("bgMusic");
+
+    function showImage(i) {
+        // Remove 'active' from all slides and pause any playing video
+        slides.forEach(slide => {
+            slide.classList.remove("active");
+            if (slide.tagName === "VIDEO") {
+                slide.pause();
+                slide.currentTime = 0;
+            }
+        });
+
+        // Add 'active' to current slide to show it (via our new CSS)
+        slides[i].classList.add("active");
+
+        // Sound Logic: Video plays (music pauses), Image plays (music resumes)
+        if (slides[i].tagName === "VIDEO") {
+            slides[i].play();
+            if (music) music.pause();
+        } else {
+            if (music) music.play().catch(() => {});
+        }
+    }
+
+    function nextImage() {
+        index++;
+
+        // If we click 'Next' on the last slide (the video), go to feedback
+        if (index >= slides.length) {
+            window.location.href = "feedback.html";
+            return;
+        }
+
+        showImage(index);
+    }
+
+    function prevImage() {
+        index--;
+        // Loop back to the end if we go past the start
+        if (index < 0) index = slides.length - 1;
+        showImage(index);
+    }
+
+    // Play music on first interaction
+    document.addEventListener("click", function() {
+        if (music) music.play().catch(() => {});
+    }, { once: true });
+
+    // Initialize the slider correctly
+    showImage(0);
+</script>
+
+</body>
+</html>
